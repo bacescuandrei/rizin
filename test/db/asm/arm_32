@@ -16,8 +16,8 @@ a "blx 0x1" fefffffa
 a "blx 0x2" fefffffb
 a "blx 0xa" 000000fb
 a "blx 0xc" 010000fa
-aB "bxeq Lr" 1eff2f01
-aB "bxne Lr" 1eff2f11
+a "bxeq Lr" 1eff2f01
+a "bxne Lr" 1eff2f11
 a "clzne r5, sl" 1a5f6f11
 aB "cmpeq sl, r4" 40005a01
 ad "cmpne r7, r6" 06005711
@@ -41,7 +41,7 @@ aB "mlaeq r7, r5, r7, r0" 95072700
 aB "mlane r3, r1, r3, r2" 91232310
 a "moveq r0, sl" 0a00a001
 a "movne r0, r9" 0900a011
-aB "mulne r3, r3, r0" 93000310
+a "mulne r3, r3, r0" 93000310
 ad "mul r2, r3, r4" 930402e0 0x0 (set r2 (* (var r3) (var r4)))
 ad "mul r6, r6, r2" 960206e0 0x0 (set r6 (* (var r6) (var r2)))
 d "muls r0, r1, r2" 910210e0 0x0 (seq (set r0 (* (var r1) (var r2))) (set zf (is_zero (var r0))) (set nf (msb (var r0))))
@@ -74,21 +74,21 @@ aB "stmeq r0, {r2, r3}" 0c008008
 aB "stmeq ip, {r0, r1, r2}" 07008c08
 aB "stmeq ip, {r0, r1, r2, r3}" 0f008c08
 aB "strbeq ip, [r2, -1]" 01c04205
-aB "strbeq r3, [r5]" 0030c505
+a "strbeq r3, [r5]" 0030c505
 aB "strdeq r2, [r4]" f020c401
 aB "strdeq r4, [r8, 80]" f045c801
 aB "streq r3, [r5, -4]" 04300505
 aB "streq r1, [fp, -304]" 30110b05
 aB "strhne r3, [fp, -50]" b2334b11
 aB "strheq r3, [fp, -56]" b8334b01
-aB "strheq r1, [r0]" b010c001
-aB "strhne r1, [r2,r3]" b3108211
+a "strheq r1, [r0]" b010c001
+a "strhne r1, [r2,r3]" b3108211
 a "strex r1, r2, [r5]" 921f85e1
 a "subeq ip, r0, 32" 20c04002
 aB "subne r6, r3, r6, asr 1" c6604310
 a "subne r5, r5, r3" 03504510
 a "svceq 0x00000000" 0000000f
-aB "umlalnE r4, r5, r3, r7" 9347a510
+a "umlalnE r4, r5, r3, r7" 9347a510
 aB "uxtbeq r1, r0" 7010ef06
 aB "uxtheq r0, r0" 7000ff06
 aB "vstreq d0, [r0]" 000b800d
@@ -114,6 +114,25 @@ a "strexh r2, r5, [r6]" 952fe6e1
 a "strexh r5, r2, [r4]" 925fe4e1
 ad "strh r5, [r2, r4]" b45082e1 0x0 (storew 0 (+ (var r2) (var r4)) (cast 16 false (var r5)))
 aB "strxh r5, [r2, 4]" b450c2e1
+a "bxeq lr" 1eff2f01
+a "blxne r3" 33ff2f11
+a "strbne r0, [r1, 4]" 0400c115
+a "strbteq r0, [r1]" 0000e104
+a "strhne r0, [r1, 2]" b200c111
+a "strdeq r0, r1, [r2]" f000c201
+a "muleq r0, r1, r2" 91020000
+a "mulne r0, r1" 90010010
+a "smullne r0, r1, r2, r3" 9203c110
+a "umulleq r0, r1, r2, r3" 92038100
+a "smlaleq r0, r1, r2, r3" 9203e100
+a "umlal r0, r1, r2, r3" 9203a1e0
+a "umlalgt r0, r1, r2, r3" 9203a1c0
+a "smlabbne r0, r1, r2, r3" 81320011
+a "smlattgt r0, r1, r2, r3" e13200c1
+a "smlawbeq r0, r1, r2, r3" 81322001
+a "lsleq r0, r1, r2" 1102a001
+a "rorne r3, r4, r5" 7435a011
+a "mrceq p4, 4, r5, c2, c2, 0" 1254920e
 d "addeq r1, r1, r0" 00108100 0x0 (branch (var zf) (set r1 (+ (var r1) (var r0))) nop)
 d "addeq r1, r1, r2, lsl 2" 02118100
 d "addne r1, r1, ip" 0c108110 0x0 (branch (! (var zf)) (set r1 (+ (var r1) (var r12))) nop)
@@ -257,8 +276,8 @@ a "blne 0x1900" 3E06001B
 a "bl 0x1900" 3e0600eb
 a "b 0x1900" 3e0600ea
 a "b 0x80000000" feffffea 0x80000000
-aB "bxeq lr" 1eff2f01
-aB "bxne lr" 1eff2f11
+a "bxeq lr" 1eff2f01
+a "bxne lr" 1eff2f11
 a "clzne r5, sl" 1a5f6f11
 aB "cmpeq sl, r0, asr 32" 40005a01
 a "cmpne r7, r6" 06005711
@@ -279,7 +298,7 @@ aB "lsrne r0, r0, 9" a004a011
 aB "mlaeq r7, r5, r7, r0" 95072700
 aB "mlane r3, r1, r3, r2" 91232310
 a "movne r0, sb" 0900a011
-aB "mulne r3, r3, r0" 93000310
+a "mulne r3, r3, r0" 93000310
 a "mvneq r0, 0x15" 1500e003
 a "mvneq r0, 0x80000000" 0201e003
 a "orreq r5, r5, r3" 03508501
@@ -302,20 +321,20 @@ aB "stmeq r0, {r2, r3}" 0c008008
 aB "stmeq ip, {r0, r1, r2}" 07008c08
 aB "stmeq ip, {r0, r1, r2, r3}" 0f008c08
 aB "strbeq ip, [r2, -1]" 01c04205
-aB "strbeq r3, [r5]" 0030c505
-aB "strdeq r2, r3, [r4]" f020c401
-aB "strdeq r4, r5, [r8, 0x50]" f045c801
+a "strbeq r3, [r5]" 0030c505
+a "strdeq r2, r3, [r4]" f020c401
+a "strdeq r4, r5, [r8, 0x50]" f045c801
 aB "streq r3, [r5, -4]" 04300505
 aB "streq r1, [fp, -0x130]" 30110b05
 aB "strhne r3, [fp, -0x32]" b2334b11
 aB "strheq r3, [fp, -0x38]" b8334b01
-aB "strheq r1, [r0]" b010c001
-aB "strhne r1, [r2, r3]" b3108211
+a "strheq r1, [r0]" b010c001
+a "strhne r1, [r2, r3]" b3108211
 a "subeq ip, r0, 0x20" 20c04002
 aB "subne r6, r3, r6, asr 1" c6604310
 a "subne r5, r5, r3" 03504510
 a "svceq 0" 0000000f
-aB "umlalne r4, r5, r3, r7" 9347a510
+a "umlalne r4, r5, r3, r7" 9347a510
 aB "uxtbeq r1, r0" 7010ef06
 aB "uxtheq r0, r0" 7000ff06
 aB "vstreq d0, [r0]" 000b800d

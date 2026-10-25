@@ -86,17 +86,17 @@ static ArmOp ops[] = {
 	{ "strexh", 0x900fe000, TYPE_MEM },
 	{ "strexb", 0x900fc000, TYPE_MEM },
 	{ "strex", 0x900f8000, TYPE_MEM },
-	{ "strbt", 0x0000e0e4, TYPE_MEM },
-	{ "strb", 0x0000c0e5, TYPE_MEM },
-	{ "strd", 0xf000c0e1, TYPE_MEM },
-	{ "strh", 0xb00080e1, TYPE_MEM },
+	{ "strbt", 0x0000e004, TYPE_MEM },
+	{ "strb", 0x0000c005, TYPE_MEM },
+	{ "strd", 0xf000c001, TYPE_MEM },
+	{ "strh", 0xb0008001, TYPE_MEM },
 	{ "str", 0x8000, TYPE_MEM },
 
 	{ "bfc", 0x1f00c007, TYPE_BFC },
 	{ "bfi", 0x1000c007, TYPE_BFI },
 
-	{ "blx", 0x30ff2fe1, TYPE_BRR },
-	{ "bx", 0x10ff2fe1, TYPE_BRR },
+	{ "blx", 0x30ff2f01, TYPE_BRR },
+	{ "bx", 0x10ff2f01, TYPE_BRR },
 
 	{ "bl", 0xb, TYPE_BRA },
 	// bx/blx - to register, b, bne,.. justjust  offset
@@ -116,16 +116,17 @@ static ArmOp ops[] = {
 	{ "svc", 0xf, TYPE_SWI }, // ???
 	{ "hlt", 0x70000001, TYPE_HLT }, // ???u
 
-	{ "mul", 0x900000e0, TYPE_MUL },
-	{ "smull", 0x9000c0e0, TYPE_MUL },
-	{ "umull", 0x900080e0, TYPE_MUL },
-	{ "smlal", 0x9000e0e0, TYPE_MUL },
-	{ "smlabb", 0x800000e1, TYPE_MUL },
-	{ "smlabt", 0xc00000e1, TYPE_MUL },
-	{ "smlatb", 0xa00000e1, TYPE_MUL },
-	{ "smlatt", 0xe00000e1, TYPE_MUL },
-	{ "smlawb", 0x800020e1, TYPE_MUL },
-	{ "smlawt", 0xc00020e1, TYPE_MUL },
+	{ "mul", 0x90000000, TYPE_MUL },
+	{ "smull", 0x9000c000, TYPE_MUL },
+	{ "umull", 0x90008000, TYPE_MUL },
+	{ "smlal", 0x9000e000, TYPE_MUL },
+	{ "umlal", 0x9000a000, TYPE_MUL },
+	{ "smlabb", 0x80000001, TYPE_MUL },
+	{ "smlabt", 0xc0000001, TYPE_MUL },
+	{ "smlatb", 0xa0000001, TYPE_MUL },
+	{ "smlatt", 0xe0000001, TYPE_MUL },
+	{ "smlawb", 0x80002001, TYPE_MUL },
+	{ "smlawt", 0xc0002001, TYPE_MUL },
 
 	{ "ands", 0x1000, TYPE_ARI },
 	{ "and", 0x0000, TYPE_ARI },
@@ -140,17 +141,17 @@ static ArmOp ops[] = {
 	{ "teq", 0x3001, TYPE_TST },
 	{ "tst", 0x1001, TYPE_TST },
 
-	{ "lsr", 0x3000a0e1, TYPE_SHFT },
-	{ "asr", 0x5000a0e1, TYPE_SHFT },
-	{ "lsl", 0x1000a0e1, TYPE_SHFT },
-	{ "ror", 0x7000a0e1, TYPE_SHFT },
+	{ "lsr", 0x3000a001, TYPE_SHFT },
+	{ "asr", 0x5000a001, TYPE_SHFT },
+	{ "lsl", 0x1000a001, TYPE_SHFT },
+	{ "ror", 0x7000a001, TYPE_SHFT },
 
 	{ "rev16", 0xb00fbf06, TYPE_REV },
 	{ "revsh", 0xb00fff06, TYPE_REV },
 	{ "rev", 0x300fbf06, TYPE_REV },
 	{ "rbit", 0x300fff06, TYPE_REV },
 
-	{ "mrc", 0x100010ee, TYPE_COPROC },
+	{ "mrc", 0x1000100e, TYPE_COPROC },
 	{ "setend", 0x000001f1, TYPE_ENDIAN },
 	{ "clz", 0x000f6f01, TYPE_CLZ },
 	{ "neg", 0x7000, TYPE_NEG },
@@ -5958,7 +5959,7 @@ static int arm_assemble(ArmOpcode *ao, ut64 off, const char *str) {
 					ao->o |= (ret & 0xf00) << 8;
 					break;
 				case TYPE_MUL:
-					if (!strcmpnull(ao->op, "mul")) {
+					if (!strcmp(ops[i].name, "mul")) {
 						ret = getreg(ao->a[0]);
 						a = getreg(ao->a[1]);
 						b = getreg(ao->a[2]);
@@ -5980,12 +5981,12 @@ static int arm_assemble(ArmOpcode *ao, ut64 off, const char *str) {
 						if (low == -1 || high == -1 || a == -1 || b == -1) {
 							return 0;
 						}
-						if (!strcmpnull(ao->op, "smlal")) {
+						if (!strcmp(ops[i].name, "smlal")) {
 							ao->o |= low << 20;
 							ao->o |= high << 8;
 							ao->o |= a << 24;
 							ao->o |= b << 16;
-						} else if (!strncmp(ao->op, "smla", 4)) {
+						} else if (!strncmp(ops[i].name, "smla", 4)) {
 							if (low > 14 || high > 14 || a > 14) {
 								return 0;
 							}
